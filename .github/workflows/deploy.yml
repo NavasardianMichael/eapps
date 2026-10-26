@@ -1,0 +1,185 @@
+# =============================================================================
+# Build and deploy eapps.site to production. Operator documentation: docs/DEPLOYMENT.md
+#
+# REQUIRED GITHUB SECRETS:
+#   SSH_HOST, SSH_USER, SSH_KEY, SSH_PORT (optional, default 22)
+#   APP_DIR                deployment root, e.g. /home/michael/apps/eapps
+#
+# OPTIONAL (Secrets or Variables), inlined at build time — empty turns the feature off:
+#   NEXT_PUBLIC_GA_MEASUREMENT_ID, NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+#   NEXT_PUBLIC_YANDEX_VERIFICATION, NEXT_PUBLIC_BING_SITE_VERIFICATION
+#
+# The canonical origin is fixed in the build job, not a secret: every canonical, hreflang,
+# sitemap entry and JSON-LD id is built from it, and it must never fall back to localhost.
+#
+# On-host layout:
+#   $APP_DIR/releases/<sha>/   Next standalone bundle (server.js, .next, public)
+#   $APP_DIR/current        -> releases/<sha>
+# =============================================================================
+
+name: Deploy to Production
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'deployment/**'
+      - '.claude/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  KEEP_RELEASES: 3
+  WEB_PORT: 7008
+  SSH_OPTS: '-o ServerAliveInterval=30 -o ServerAliveCountMax=120 -o TCPKeepAlive=yes -o ConnectTimeout=30'
+
+# Deploys queue rather than abort: cancelling mid-script could leave `current` pointing at a
+# release whose service was never restarted.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Verify and build
+    runs-on: ubuntu-latest
+    env:
+      # Fixed, not a secret: every canonical, hreflang and JSON-LD id is built from it.
+      NEXT_PUBLIC_SITE_URL: https://eapps.site
+      NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID || vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+      NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || vars.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}
+      NEXT_PUBLIC_YANDEX_VERIFICATION: ${{ secrets.NEXT_PUBLIC_YANDEX_VERIFICATION || vars.NEXT_PUBLIC_YANDEX_VERIFICATION }}
+      NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_BING_SITE_VERIFICATION || vars.NEXT_PUBLIC_BING_SITE_VERIFICATION }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+      - run: pnpm gates
+      - run: pnpm lint
+      - run: pnpm check:messages
+      - run: pnpm test
+      - run: pnpm build
+
+      # `output: 'standalone'` leaves public/ and .next/static out on purpose; nginx serves
+      # .next/static off the release directory, so both are copied in.
+      - name: Assemble standalone bundle
+        run: |
+          cp -r public .next/standalone/
+          cp -r .next/static .next/standalone/.next/
+          test -f .next/standalone/server.js
+          tar -czf web-build.tar.gz -C .next/standalone .
+          echo "bundle: $(du -sh web-build.tar.gz | cut -f1)"
+
+      # Boot what actually ships: output file tracing can miss files behind a package's
+      # `exports` map, which only shows when node runs server.js. /en is a static page, so a
+      # 200 proves the bundle boots and renders.
+      - name: Smoke-test the standalone bundle
+        working-directory: .next/standalone
+        env:
+          PORT: ${{ env.WEB_PORT }}
+          HOSTNAME: 127.0.0.1
+          NODE_ENV: production
+        run: |
+          node server.js > /tmp/web-smoke.log 2>&1 &
+          pid=$!
+          for i in $(seq 1 30); do
+            if ! kill -0 "$pid" 2>/dev/null; then
+              echo "::error::the standalone bundle exited before it listened on $PORT"
+              cat /tmp/web-smoke.log
+              exit 1
+            fi
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "http://127.0.0.1:$PORT/en" || true)
+            if [ "$code" = "200" ]; then
+              echo "standalone bundle answered /en with 200 after ${i}s"
+              kill "$pid" 2>/dev/null || true
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::the standalone bundle never answered /en with 200 on port $PORT"
+          cat /tmp/web-smoke.log
+          kill "$pid" 2>/dev/null || true
+          exit 1
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: web-build
+          path: web-build.tar.gz
+          retention-days: 1
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: web-build
+
+      - uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Copy artifact to host
+        run: |
+          scp ${{ env.SSH_OPTS }} -P "${{ secrets.SSH_PORT || 22 }}" \
+            web-build.tar.gz "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/eapps-web-build.tar.gz"
+
+      - name: Deploy
+        run: |
+          ssh ${{ env.SSH_OPTS }} -p "${{ secrets.SSH_PORT || 22 }}" \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" bash -s -- \
+            "${{ secrets.APP_DIR }}" "${{ github.sha }}" "${{ env.KEEP_RELEASES }}" "${{ env.WEB_PORT }}" << 'EOF'
+          set -euo pipefail
+          APP_DIR="$1"; RELEASE="$2"; KEEP="$3"; WEB_PORT="$4"
+
+          NEW="$APP_DIR/releases/$RELEASE"
+          mkdir -p "$APP_DIR/releases"
+          rm -rf "$NEW"; mkdir -p "$NEW"
+          tar -xzf /tmp/eapps-web-build.tar.gz -C "$NEW"
+          ln -sfn "$NEW" "$APP_DIR/current"
+          sudo systemctl restart eapps-web
+
+          # /en, never /: localePrefix is 'always', so / is a 307 by design.
+          for i in $(seq 1 45); do
+            if curl -sf -o /dev/null --max-time 5 "http://127.0.0.1:$WEB_PORT/en"; then
+              echo "web healthy after $((i * 2))s"
+              break
+            fi
+            if [ "$i" = 45 ]; then
+              echo "::error::web did not become healthy within 90s"
+              systemctl status eapps-web --no-pager --lines=20 || true
+              journalctl -u eapps-web -n 200 --no-pager || true
+              exit 1
+            fi
+            sleep 2
+          done
+
+          # Keep the newest $KEEP releases so a rollback target survives.
+          ( cd "$APP_DIR/releases" && ls -t | tail -n +$((KEEP + 1)) | xargs -r rm -rf )
+          rm -f /tmp/eapps-web-build.tar.gz
+          echo "==> done"
+          EOF
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Deployment"
+            echo "**Release:** \`${{ github.sha }}\` → \`current\`, systemd \`eapps-web\`"
+          } >> "$GITHUB_STEP_SUMMARY"

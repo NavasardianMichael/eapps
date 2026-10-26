@@ -1,0 +1,276 @@
+/*
+ * eapps design system — Tailwind 4, CSS-first. Light only.
+ *
+ * §1 mirrors the literal ramps from tokens.ts (CSS cannot import JS;
+ * tests/unit/styles/tokens.spec.ts keeps them equal). Hex values live in §1 and tokens.ts only.
+ *
+ * Sections:
+ *   §1 Theme tokens   §2 Base   §3 Typography helpers   §4 Surfaces   §5 Buttons   §6 Utilities
+ *   §7 Keyframes   §8 Reduced motion
+ */
+
+@import 'tailwindcss';
+
+/* ── §1 Theme tokens ─────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Breakpoints: Tailwind's scale is reset so `2xl:` cannot silently exist. */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem; /* 640  large phones, landscape */
+  --breakpoint-md: 48rem; /* 768  tablets */
+  --breakpoint-lg: 64rem; /* 1024 desktop */
+  --breakpoint-xl: 90rem; /* 1440 wide desktop */
+
+  /* Paper. */
+  --color-paper-50: #fdfcfa;
+  --color-paper-100: #f8f6f1;
+  --color-paper-200: #efebe3;
+  --color-paper-300: #e2dccf;
+
+  /* Lettering. */
+  --color-ink-300: #b3b0c2;
+  --color-ink-500: #64607a;
+  --color-ink-700: #3d3953;
+  --color-ink-900: #1c1a2e;
+
+  /* Brand. */
+  --color-brand-100: #e8e9ff;
+  --color-brand-200: #cfd2ff;
+  --color-brand-300: #a9aefc;
+  --color-brand-400: #7f86f5;
+  --color-brand-500: #5b5fe9;
+  --color-brand-600: #4644cf;
+  --color-brand-700: #3634a6;
+
+  /* App accents. */
+  --color-coral-100: #ffe6de;
+  --color-coral-200: #ffc9b8;
+  --color-coral-300: #ffa58b;
+  --color-coral-700: #a8361a;
+
+  --color-violet-100: #f1e8ff;
+  --color-violet-200: #e0cfff;
+  --color-violet-300: #c7a8ff;
+  --color-violet-700: #6930b8;
+
+  --color-sun-100: #fff6cf;
+  --color-sun-200: #ffec9e;
+  --color-sun-300: #ffe06b;
+  --color-sun-700: #8a6700;
+
+  --color-teal-100: #d9f4ef;
+  --color-teal-200: #b0e9df;
+  --color-teal-300: #7fdacb;
+  --color-teal-700: #0d6f63;
+
+  --color-sky-100: #e1f1ff;
+  --color-sky-200: #c0e2ff;
+  --color-sky-300: #93cdff;
+  --color-sky-700: #1b5a92;
+
+  /* Hairlines. */
+  --color-line-subtle: #ebe6dc;
+  --color-line-strong: #d9d2c3;
+
+  /* One family for everything (fonts.ts), with the per-locale script face appended. */
+  --font-sans: var(--font-manrope), var(--font-script, ui-sans-serif), system-ui, sans-serif;
+
+  /* Fluid type scale. */
+  --text-display: clamp(2.5rem, 1.6rem + 3.8vw, 4.75rem);
+  --text-display--line-height: 1.04;
+  --text-h1: clamp(1.875rem, 1.4rem + 2vw, 3rem);
+  --text-h1--line-height: 1.12;
+  --text-h2: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --text-h2--line-height: 1.18;
+  --text-h3: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-h3--line-height: 1.3;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+
+  --spacing-header: 4rem;
+
+  --radius-card: 1.25rem;
+  --radius-tile: 1rem;
+
+  --shadow-card: 0 1px 0 0 #d9d2c3, 0 18px 40px -28px #3d395366;
+  --shadow-lift: 0 1px 0 0 #d9d2c3, 0 28px 56px -28px #3d395380;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-rise: rise 0.6s var(--ease-out) both;
+}
+
+/* ── §2 Base ─────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    color-scheme: light;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    /* In-page anchors land below the sticky header. */
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-paper-100);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+
+  summary,
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-ink-900);
+  }
+}
+
+/* ── §3 Typography helpers ───────────────────────────────────────────────────────────── */
+@utility eyebrow {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-700);
+}
+
+/* A marker-pen underline behind a word in a heading. */
+@utility highlight {
+  background-image: linear-gradient(
+    transparent 60%,
+    var(--color-brand-200) 60%,
+    var(--color-brand-200) 92%,
+    transparent 92%
+  );
+  padding-inline: 0.06em;
+  box-decoration-break: clone;
+}
+
+/* ── §4 Surfaces ─────────────────────────────────────────────────────────────────────── */
+@utility card {
+  background: #ffffff;
+  border: 1px solid var(--color-line-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* The hero's soft glow: two blurred brand washes behind the headline. */
+@utility hero-glow {
+  background:
+    radial-gradient(40rem 22rem at 15% 0%, var(--color-brand-100), transparent 70%),
+    radial-gradient(36rem 20rem at 90% 10%, var(--color-violet-100), transparent 70%);
+}
+
+/* ── §5 Buttons ──────────────────────────────────────────────────────────────────────── */
+@utility btn {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding-inline: 1.25rem;
+  font-weight: 700;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    transform 0.15s var(--ease-out);
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+@utility btn-primary {
+  background: var(--color-brand-600);
+  color: #ffffff;
+
+  &:hover {
+    background: var(--color-brand-700);
+  }
+}
+
+@utility btn-outline {
+  background: #ffffff;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-ink-900);
+
+  &:hover {
+    border-color: var(--color-ink-300);
+  }
+}
+
+/* ── §6 Utilities ────────────────────────────────────────────────────────────────────── */
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: max(1rem, var(--safe-left));
+  @variant sm {
+    padding-inline: 1.5rem;
+  }
+}
+
+@utility pt-safe {
+  padding-top: var(--safe-top);
+}
+
+@utility pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ── §7 Keyframes ────────────────────────────────────────────────────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── §8 Reduced motion ───────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

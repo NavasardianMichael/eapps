@@ -1,0 +1,36 @@
+# =============================================================================
+# systemd — eapps.site (Next.js standalone). Install to /etc/systemd/system/eapps-web.service
+# Paths assume APP_DIR=/home/michael/apps/eapps.
+#
+# WorkingDirectory is the `current` symlink, resolved at start, so `systemctl restart` is
+# what promotes a release. Never point it at a concrete releases/<sha> path.
+# =============================================================================
+[Unit]
+Description=eapps — web (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=michael
+Group=michael
+WorkingDirectory=/home/michael/apps/eapps/current
+Environment=NODE_ENV=production
+Environment=PORT=7008
+Environment=HOSTNAME=127.0.0.1
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=2
+KillSignal=SIGTERM
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+# Next writes its cache (image optimizer, prerender cache) into the release's .next/cache.
+ReadWritePaths=/home/michael/apps/eapps
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

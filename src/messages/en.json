@@ -1,0 +1,135 @@
+{
+  "Common": {
+    "siteName": "eapps",
+    "tagline": "Free web apps and games that open in your browser and speak your language.",
+    "skipToContent": "Skip to content",
+    "language": "Language",
+    "chooseLanguage": "Choose language",
+    "madeBy": "Made by {author}",
+    "copyright": "© {year} {siteName}",
+    "opensInNewTab": "opens in a new tab"
+  },
+  "Nav": {
+    "main": "Main",
+    "footer": "Site",
+    "apps": "Apps",
+    "why": "Why eapps",
+    "faq": "FAQ"
+  },
+  "Seo": {
+    "homeTitle": "eapps — Free Web Apps & Games: Crossword, Quiz, Hangman",
+    "homeDescription": "Free web apps and games in one place: AI crosswords, the Millionaire quiz in 80 languages, Armenian Hangman, map charts and browser tools. No sign-up.",
+    "keywords": "free web apps, free online games, AI crossword, crossword generator, millionaire quiz, trivia quiz online, hangman in Armenian, choropleth map maker, Chrome extension, web app marketplace",
+    "ogImageAlt": "eapps — free web apps and games"
+  },
+  "Hero": {
+    "eyebrow": "Free apps · No sign-up",
+    "title": "Small apps that do <mark>one thing well</mark>",
+    "subtitle": "eapps is a shelf of free web apps and games — crosswords, quizzes, word games and handy tools — that open in your browser, work on any device and speak your language.",
+    "cta": "Browse the apps",
+    "statApps": "{count, plural, one {# app} other {# apps}}",
+    "statLanguages": "Up to {count} languages",
+    "statSignup": "No account needed"
+  },
+  "Catalog": {
+    "title": "All apps",
+    "subtitle": "Each one opens in a new tab, right in your browser.",
+    "open": "Open",
+    "openLabel": "Open {name}",
+    "languages": "{count, plural, one {# language} other {# languages}}",
+    "category": {
+      "game": "Game",
+      "tool": "Tool"
+    },
+    "platform": {
+      "pwa": "Installable web app",
+      "web": "Web app",
+      "chrome": "Chrome extension"
+    },
+    "pricing": {
+      "free": "Free",
+      "freemium": "Free to start"
+    }
+  },
+  "Apps": {
+    "crossword": {
+      "name": "Crossword AI",
+      "tagline": "Fresh AI crosswords and scanwords, never a repeat.",
+      "description": "Free crossword and scanword puzzles written by AI in English, Russian and Armenian. Pick a topic and a difficulty: every puzzle brings words you haven't seen before. Plays offline and prints on one page."
+    },
+    "millionaire": {
+      "name": "Millionaire Quiz",
+      "tagline": "Fifteen questions to the million, in your language.",
+      "description": "The quiz-show game with Classic, Marathon and Time Attack modes, four lifelines — including a Phone a Friend who is an AI — and global leaderboards. Questions are written natively in 80 languages."
+    },
+    "hangman": {
+      "name": "Armenian Hangman",
+      "tagline": "The classic word game, in Armenian.",
+      "description": "Guess an Armenian word chosen by AI, by category and difficulty; play a friend on one device; or send a challenge link with your own word. Daily hints, streaks and offline play."
+    },
+    "regionify": {
+      "name": "Regionify",
+      "tagline": "Turn spreadsheet data into map charts.",
+      "description": "Build choropleth maps from CSV, Excel, JSON or Google Sheets: regions are matched automatically, then colours, legends and styles are yours to set before you export a publication-ready image. Free to start, with one-time upgrades."
+    },
+    "distanceMeasurer": {
+      "name": "Distance Measurer",
+      "tagline": "Measure distances on any web page.",
+      "description": "A lightweight Chrome extension for designers, front-end developers and QA: measure the distance between points and elements on any web page, in pixels, without leaving the browser."
+    }
+  },
+  "Why": {
+    "title": "Why eapps",
+    "items": [
+      {
+        "title": "Free to use",
+        "body": "Every game is free to play and every tool is free to start. No account and no paywall stand between you and trying it."
+      },
+      {
+        "title": "Written for your language",
+        "body": "Content is written natively for each language rather than translated word for word — and Armenian and Russian are first-class, not an afterthought."
+      },
+      {
+        "title": "Any device, even offline",
+        "body": "Phone, tablet or desktop. The games install like apps from the browser and keep working without a connection."
+      }
+    ]
+  },
+  "Faq": {
+    "title": "Questions and answers",
+    "items": [
+      {
+        "question": "What is eapps?",
+        "answer": "eapps (eapps.site) is a small marketplace of free web apps and games: Crossword AI, Millionaire Quiz, Armenian Hangman, Regionify and the Distance Measurer extension for Chrome. Each one is a standalone app; this page lists them in one place."
+      },
+      {
+        "question": "Are the apps free?",
+        "answer": "Yes. The games are completely free and need no sign-up, and the Distance Measurer extension is free. Regionify is free to start; optional one-time upgrades unlock extras."
+      },
+      {
+        "question": "Do I need to install anything?",
+        "answer": "No. Every app runs in a modern browser on a phone, tablet or computer. The games can also be added to your home screen as installable web apps, and Distance Measurer is installed from the Chrome Web Store."
+      },
+      {
+        "question": "Which languages are supported?",
+        "answer": "This site is in English, Russian and Armenian. Crossword AI plays in all three, Millionaire Quiz in 80 languages, Hangman in Armenian, and Regionify in seven languages, Russian and English among them."
+      },
+      {
+        "question": "Do the apps work offline?",
+        "answer": "The games do: once you have opened them, they keep working without a connection. Regionify needs a connection to import data and save projects."
+      },
+      {
+        "question": "Who makes eapps?",
+        "answer": "eapps is built and run by Michael Navasardyan, an independent developer. Each app has its own page with its rules, privacy policy and contact details."
+      }
+    ]
+  },
+  "Errors": {
+    "notFoundTitle": "This page isn't on the shelf",
+    "notFoundBody": "The link may be old or mistyped. Every app is listed on the home page.",
+    "goHome": "Go to the home page",
+    "pageErrorTitle": "Something went wrong",
+    "pageErrorBody": "This page hit an unexpected error. Trying again usually helps.",
+    "retry": "Try again"
+  }
+}
