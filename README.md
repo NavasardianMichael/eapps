@@ -3,13 +3,13 @@
 The home of **[eapps.site](https://eapps.site)**: a one-page marketplace of free web apps and
 games, in **English, Russian and Armenian**.
 
-| App | What it is | Where |
-|---|---|---|
-| Crossword AI | AI crosswords and scanwords, never a repeat | crossword.eapps.site |
-| Millionaire Quiz | The quiz-show game in 80 languages | who-wants-to-be-a-millionaire.mnavasardian.com |
-| Armenian Hangman | The classic word game, in Armenian | hangman.mnavasardian.com |
-| Regionify | Choropleth maps from spreadsheet data | regionify.pro |
-| Distance Measurer | Chrome extension for measuring web pages | Chrome Web Store |
+| App               | What it is                                  | Where                                          |
+| ----------------- | ------------------------------------------- | ---------------------------------------------- |
+| Crossword AI      | AI crosswords and scanwords, never a repeat | crossword.eapps.site                           |
+| Millionaire Quiz  | The quiz-show game in 80 languages          | who-wants-to-be-a-millionaire.mnavasardian.com |
+| Armenian Hangman  | The classic word game, in Armenian          | hangman.mnavasardian.com                       |
+| Regionify         | Choropleth maps from spreadsheet data       | regionify.pro                                  |
+| Distance Measurer | Chrome extension for measuring web pages    | Chrome Web Store                               |
 
 Built for search and answer engines: every language has its own self-canonical URL with
 hreflang, the page is fully server-rendered (it works with JavaScript off), and it carries
@@ -33,4 +33,5 @@ pnpm verify                 # typecheck → grep gates → lint → catalogues �
 pnpm test:e2e               # Playwright on desktop and phone (needs the site running)
 ```
 
-See `CLAUDE.md` for where things live and how to add an app, `docs/DEPLOYMENT.md` for production.
+See `CLAUDE.md` for where things live and how to add an app. Production: `docs/PRODUCTION_SETUP.md`
+(one-time server setup) and `docs/DEPLOYMENT.md` (the pipeline).

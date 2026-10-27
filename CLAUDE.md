@@ -5,7 +5,7 @@ Millionaire Quiz, Armenian Hangman, Regionify, Distance Measurer) in English, Ru
 Armenian, built to rank in search and to be quoted by answer engines. No API, no database.
 
 **Stack:** Next.js 16 (App Router, `src/proxy.ts`, standalone) · React 19 · TypeScript 6 ·
-Tailwind 4 (tokens in `styles/tokens.ts` ↔ `globals.css` §1) · next-intl 4 · schema-dts · GA4 ·
+Tailwind 4 (tokens in `styles/tokens.ts` ↔ `globals.css` §1) · next-intl 4 · schema-dts ·
 pnpm. Patterns from `../crossword` (itself built from `../who-wants-to-be-a-millionaire/docs/STACK_BLUEPRINT.md`),
 minus everything a static directory does not need: no antd, Zustand, axios, service worker or Sentry.
 
@@ -21,17 +21,17 @@ pnpm check:messages    # ru/hy catalogues match en.json (keys, placeholders, plu
 
 ## Where things live
 
-| Looking for | Go to |
-|---|---|
-| The listed apps (URL, platform, languages, price, accent) | `src/constants/catalog.ts` — copy under `Apps.<id>` in `src/messages/*.json` |
-| App glyphs and the other icons | `src/components/ui/Icon.tsx` (`APP_GLYPHS`) |
-| Accent class sets per app | `src/constants/accents.ts` |
-| The page and its sections | `src/app/[lang]/page.tsx` · `src/components/marketing/` |
-| Header, footer, language switcher | `src/components/layout/` |
-| Locales, routing, metadata, hreflang | `src/i18n/` · `src/proxy.ts` · catalogues `src/messages/` |
-| SEO/GEO: sitemap, robots, JSON-LD, link preview, icons, llms.txt | `src/app/{sitemap,robots,manifest,icon,apple-icon,opengraph-image}.ts(x)`, `src/linkedDataSchema/`, `src/helpers/llms.ts`, `src/app/llms*.txt/` |
-| Design tokens | `src/styles/tokens.ts` (owner) → `globals.css` §1 mirror (`tests/unit/styles/tokens.spec.ts`) |
-| Deploying | `docs/DEPLOYMENT.md` · `deployment/` · `.github/workflows/` |
+| Looking for                                                      | Go to                                                                                                                                                                                                 |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The listed apps (URL, platform, languages, price, accent)        | `src/constants/catalog.ts` — copy under `Apps.<id>` in `src/messages/*.json`                                                                                                                          |
+| App glyphs and the other icons                                   | `src/components/ui/Icon.tsx` (`APP_GLYPHS`)                                                                                                                                                           |
+| Accent class sets per app                                        | `src/constants/accents.ts`                                                                                                                                                                            |
+| The page and its sections                                        | `src/app/[lang]/page.tsx` · `src/components/marketing/`                                                                                                                                               |
+| Header, footer, language switcher                                | `src/components/layout/`                                                                                                                                                                              |
+| Locales, routing, metadata, hreflang                             | `src/i18n/` · `src/proxy.ts` · catalogues `src/messages/`                                                                                                                                             |
+| SEO/GEO: sitemap, robots, JSON-LD, link preview, icons, llms.txt | `src/app/{sitemap,robots,manifest,icon,apple-icon,opengraph-image}.ts(x)`, `src/linkedDataSchema/`, `src/helpers/llms.ts`, `src/app/llms*.txt/`                                                       |
+| Design tokens                                                    | `src/styles/tokens.ts` (owner) → `globals.css` §1 mirror (`tests/unit/styles/tokens.spec.ts`)                                                                                                         |
+| Deploying to eapps.site                                          | `docs/PRODUCTION_SETUP.md` (one-time server setup, in order) · `docs/DEPLOYMENT.md` (how the pipeline works) · `deployment/` (host templates; rules in `deployment/CLAUDE.md`) · `.github/workflows/` |
 
 ## Adding an app
 

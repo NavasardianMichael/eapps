@@ -1,6 +1,9 @@
 # =============================================================================
-# CI — the `pnpm verify` gate, on every pull request. Steps are spelled out so the
-# Actions UI names the gate that broke, fastest-failing first.
+# CI — the `pnpm verify` gate, on every pull request.
+#
+# Steps are spelled out individually so the Actions UI names the gate that broke,
+# in the order `verify` runs them: fastest-failing first. No services: the site has
+# no server layer, and `next build` needs nothing running.
 # =============================================================================
 
 name: CI
@@ -21,24 +24,38 @@ jobs:
     name: CI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v5
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Typecheck
         run: pnpm typecheck
+
       - name: Grep gates
         run: pnpm gates
+
       - name: Lint
         run: pnpm lint
+
       - name: Message catalogues
         run: pnpm check:messages
+
       - name: Unit tests
         run: pnpm test
+
+      # The real origin, not a secret: pull requests from forks cannot read secrets, and the
+      # build only needs it to render absolute URLs. Production reads it from the secret.
       - name: Build
         run: pnpm build
         env:

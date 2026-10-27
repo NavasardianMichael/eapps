@@ -1,12 +1,10 @@
 import type { CSSProperties, ReactNode } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
-import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { getDirection, LOCALES } from '@i18n/config'
 import { routing } from '@i18n/routing'
-import { GA_ENABLED, GA_INIT_SCRIPT, GA_SCRIPT_SRC } from '@constants/analytics'
 import { AUTHOR, SITE_NAME } from '@constants/app'
 import { getSiteUrl } from '@helpers/url'
 import { Footer } from '@components/layout/Footer'
@@ -56,16 +54,10 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-/** Search-console ownership tokens, each emitted only when set: Google, Yandex (ru) and Bing (which also feeds Copilot and ChatGPT search). */
+/** Google Search Console's HTML-tag token, emitted only when set (a Domain property verifies by DNS instead). */
 const siteVerification = (): Metadata['verification'] => {
   const google = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-  const yandex = process.env.NEXT_PUBLIC_YANDEX_VERIFICATION
-  const bing = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
-  return {
-    ...(google ? { google } : {}),
-    ...(yandex ? { yandex } : {}),
-    ...(bing ? { other: { 'msvalidate.01': bing } } : {}),
-  }
+  return google ? { google } : {}
 }
 
 /** Prerenders the page for every locale; otherwise every route would be dynamic. */
@@ -119,14 +111,6 @@ export default async function RootLayout({ children, params }: Props) {
           <main id='main'>{children}</main>
           <Footer />
         </NextIntlClientProvider>
-        {GA_ENABLED && (
-          <>
-            <Script src={GA_SCRIPT_SRC} strategy='afterInteractive' />
-            <Script id='ga-init' strategy='afterInteractive'>
-              {GA_INIT_SCRIPT}
-            </Script>
-          </>
-        )}
       </body>
     </html>
   )

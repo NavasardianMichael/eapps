@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { absoluteUrl, getSiteUrl } from '@helpers/url'
+import { absoluteUrl } from '@helpers/url'
 
 /**
  * Everything is public. Answer-engine crawlers are named and allowed explicitly — `*` already
@@ -27,6 +27,5 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: AI_CRAWLERS, allow: '/' },
     ],
     sitemap: absoluteUrl('/sitemap.xml'),
-    host: getSiteUrl(),
   }
 }

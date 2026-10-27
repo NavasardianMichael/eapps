@@ -107,6 +107,18 @@ const eslintConfig = defineConfig([
     },
   },
   {
+    // Claude Code hooks (crossword's): they read only the tool call's own JSON, and the one
+    // RegExp is assembled from string constants.
+    files: ['.claude/hooks/**/*.mjs'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'security/detect-object-injection': 'off',
+      'security/detect-non-literal-regexp': 'off',
+    },
+  },
+  {
     files: ['tests/**/*.ts', '*.config.{ts,mts}'],
     languageOptions: {
       globals: globals.node,

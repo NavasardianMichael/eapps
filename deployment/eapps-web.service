@@ -1,9 +1,12 @@
 # =============================================================================
 # systemd — eapps.site (Next.js standalone). Install to /etc/systemd/system/eapps-web.service
-# Paths assume APP_DIR=/home/michael/apps/eapps.
+# (docs/PRODUCTION_SETUP.md, step 2). Paths assume APP_DIR=/home/michael/apps/eapps.
 #
 # WorkingDirectory is the `current` symlink, resolved at start, so `systemctl restart` is
 # what promotes a release. Never point it at a concrete releases/<sha> path.
+#
+# No API_INTERNAL_URL and no env file: the site has no server layer, and every NEXT_PUBLIC_*
+# value is already inlined into the bundle at build time.
 # =============================================================================
 [Unit]
 Description=eapps — web (Next.js)
