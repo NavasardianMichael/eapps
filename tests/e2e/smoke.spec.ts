@@ -7,7 +7,7 @@ test.describe('server rendering', () => {
   test('the page is complete without JavaScript', async ({ page }) => {
     await page.goto('/en')
     await expect(page.locator('h1')).toHaveCount(1)
-    await expect(page.locator('#apps article')).toHaveCount(5)
+    await expect(page.locator('#apps article')).toHaveCount(3)
     await expect(page.locator('a[href^="https://crossword.eapps.site"]')).not.toHaveCount(0)
   })
 

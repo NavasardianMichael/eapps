@@ -6,13 +6,13 @@
  * checks), a glyph in `APP_GLYPHS` (`components/ui/Icon.tsx`) and its English name in
  * `app/opengraph-image.tsx` — the compiler asks for the last two.
  */
-export const APP_IDS = ['crossword', 'millionaire', 'hangman', 'regionify', 'distanceMeasurer'] as const
+export const APP_IDS = ['crossword', 'millionaire', 'hangman'] as const
 
 export type AppId = (typeof APP_IDS)[number]
 
 export type AppCategory = 'game' | 'tool'
 
-export type AppPlatform = 'pwa' | 'web' | 'chrome'
+export type AppPlatform = 'pwa' | 'web'
 
 export type AppPricing = 'free' | 'freemium'
 
@@ -52,7 +52,7 @@ export const CATALOG: readonly CatalogApp[] = [
   },
   {
     id: 'millionaire',
-    url: 'https://who-wants-to-be-a-millionaire.mnavasardian.com',
+    url: 'https://who-wants-to-be-a-millionaire.eapps.site',
     category: 'game',
     schemaCategory: 'GameApplication',
     genre: 'Trivia quiz',
@@ -73,28 +73,6 @@ export const CATALOG: readonly CatalogApp[] = [
     pricing: 'free',
     accent: 'sun',
   },
-  {
-    id: 'regionify',
-    url: 'https://regionify.pro',
-    category: 'tool',
-    schemaCategory: 'BusinessApplication',
-    genre: 'Data visualization',
-    platform: 'web',
-    languages: ['en', 'ru', 'de', 'es', 'fr', 'pt', 'zh'],
-    pricing: 'freemium',
-    accent: 'teal',
-  },
-  {
-    id: 'distanceMeasurer',
-    url: 'https://chromewebstore.google.com/detail/distance-measurer/nnlpnhpjpjgbajcdpngnhhcikmmafdji',
-    category: 'tool',
-    schemaCategory: 'DeveloperApplication',
-    genre: 'Browser extension',
-    platform: 'chrome',
-    languages: ['en'],
-    pricing: 'free',
-    accent: 'sky',
-  },
 ]
 
 export const appLanguageCount = (app: CatalogApp): number => app.languageCount ?? app.languages.length
@@ -103,5 +81,4 @@ export const appLanguageCount = (app: CatalogApp): number => app.languageCount ?
 export const OPERATING_SYSTEMS: Record<AppPlatform, string> = {
   pwa: 'Any (web browser); installable on Android, iOS, Windows and macOS',
   web: 'Any (web browser)',
-  chrome: 'Google Chrome',
 }

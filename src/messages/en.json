@@ -18,14 +18,14 @@
   },
   "Seo": {
     "homeTitle": "eapps — Free Web Apps & Games: Crossword, Quiz, Hangman",
-    "homeDescription": "Free web apps and games in one place: AI crosswords, the Millionaire quiz in 80 languages, Armenian Hangman, map charts and browser tools. No sign-up.",
-    "keywords": "free web apps, free online games, AI crossword, crossword generator, millionaire quiz, trivia quiz online, hangman in Armenian, choropleth map maker, Chrome extension, web app marketplace",
+    "homeDescription": "Free web games in one place: AI crosswords and scanwords, Millionaire AI — the quiz show in 80 languages — and Armenian Hangman. No sign-up, works offline.",
+    "keywords": "free web apps, free online games, AI crossword, crossword generator, scanword, millionaire quiz, AI quiz, trivia quiz online, hangman in Armenian, Armenian word games",
     "ogImageAlt": "eapps — free web apps and games"
   },
   "Hero": {
     "eyebrow": "Free apps · No sign-up",
     "title": "Small apps that do <mark>one thing well</mark>",
-    "subtitle": "eapps is a shelf of free web apps and games — crosswords, quizzes, word games and handy tools — that open in your browser, work on any device and speak your language.",
+    "subtitle": "eapps is a shelf of free web games — AI crosswords, a quiz show and a word game — that open in your browser, work on any device and speak your language.",
     "cta": "Browse the apps",
     "statApps": "{count, plural, one {# app} other {# apps}}",
     "statLanguages": "Up to {count} languages",
@@ -43,8 +43,7 @@
     },
     "platform": {
       "pwa": "Installable web app",
-      "web": "Web app",
-      "chrome": "Chrome extension"
+      "web": "Web app"
     },
     "pricing": {
       "free": "Free",
@@ -58,24 +57,14 @@
       "description": "Free crossword and scanword puzzles written by AI in English, Russian and Armenian. Pick a topic and a difficulty: every puzzle brings words you haven't seen before. Plays offline and prints on one page."
     },
     "millionaire": {
-      "name": "Millionaire Quiz",
-      "tagline": "Fifteen questions to the million, in your language.",
-      "description": "The quiz-show game with Classic, Marathon and Time Attack modes, four lifelines — including a Phone a Friend who is an AI — and global leaderboards. Questions are written natively in 80 languages."
+      "name": "Millionaire AI",
+      "tagline": "Fifteen questions to the million, written by AI in your language.",
+      "description": "The quiz-show game with Classic, Marathon and Time Attack modes, four lifelines — including a Phone a Friend who is an AI — and global leaderboards. Questions are written by AI natively in 80 languages."
     },
     "hangman": {
       "name": "Armenian Hangman",
       "tagline": "The classic word game, in Armenian.",
       "description": "Guess an Armenian word chosen by AI, by category and difficulty; play a friend on one device; or send a challenge link with your own word. Daily hints, streaks and offline play."
-    },
-    "regionify": {
-      "name": "Regionify",
-      "tagline": "Turn spreadsheet data into map charts.",
-      "description": "Build choropleth maps from CSV, Excel, JSON or Google Sheets: regions are matched automatically, then colours, legends and styles are yours to set before you export a publication-ready image. Free to start, with one-time upgrades."
-    },
-    "distanceMeasurer": {
-      "name": "Distance Measurer",
-      "tagline": "Measure distances on any web page.",
-      "description": "A lightweight Chrome extension for designers, front-end developers and QA: measure the distance between points and elements on any web page, in pixels, without leaving the browser."
     }
   },
   "Why": {
@@ -83,7 +72,7 @@
     "items": [
       {
         "title": "Free to use",
-        "body": "Every game is free to play and every tool is free to start. No account and no paywall stand between you and trying it."
+        "body": "Every app is free, with no account and no paywall standing between you and playing."
       },
       {
         "title": "Written for your language",
@@ -100,23 +89,23 @@
     "items": [
       {
         "question": "What is eapps?",
-        "answer": "eapps (eapps.site) is a small marketplace of free web apps and games: Crossword AI, Millionaire Quiz, Armenian Hangman, Regionify and the Distance Measurer extension for Chrome. Each one is a standalone app; this page lists them in one place."
+        "answer": "eapps (eapps.site) is a small marketplace of free web apps and games: Crossword AI, Millionaire AI and Armenian Hangman. Each one is a standalone app; this page lists them in one place."
       },
       {
         "question": "Are the apps free?",
-        "answer": "Yes. The games are completely free and need no sign-up, and the Distance Measurer extension is free. Regionify is free to start; optional one-time upgrades unlock extras."
+        "answer": "Yes. Every app is completely free and needs no sign-up."
       },
       {
         "question": "Do I need to install anything?",
-        "answer": "No. Every app runs in a modern browser on a phone, tablet or computer. The games can also be added to your home screen as installable web apps, and Distance Measurer is installed from the Chrome Web Store."
+        "answer": "No. Every app runs in a modern browser on a phone, tablet or computer. You can also add any of them to your home screen as an installable web app."
       },
       {
         "question": "Which languages are supported?",
-        "answer": "This site is in English, Russian and Armenian. Crossword AI plays in all three, Millionaire Quiz in 80 languages, Hangman in Armenian, and Regionify in seven languages, Russian and English among them."
+        "answer": "This site is in English, Russian and Armenian. Crossword AI plays in all three, Millionaire AI in 80 languages, and Hangman in Armenian."
       },
       {
         "question": "Do the apps work offline?",
-        "answer": "The games do: once you have opened them, they keep working without a connection. Regionify needs a connection to import data and save projects."
+        "answer": "Yes: once you have opened them, the games keep working without a connection, using what they have already saved. Fresh AI content arrives when you are back online."
       },
       {
         "question": "Who makes eapps?",

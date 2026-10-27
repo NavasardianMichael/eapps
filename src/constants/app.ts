@@ -21,4 +21,4 @@ export const AUTHOR = {
  * `dateModified`. Bump it with the copy — a date that moves on every deploy teaches crawlers
  * to ignore it.
  */
-export const CONTENT_UPDATED_AT = new Date('2026-10-26T00:00:00Z')
+export const CONTENT_UPDATED_AT = new Date('2026-10-27T00:00:00Z')

@@ -226,12 +226,14 @@ app gets its own reports on top.
    deploy; `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` stays empty.
 3. In the Domain property → **Sitemaps**, submit the hub's and each app's sitemap:
    `https://eapps.site/sitemap.xml` (3 URLs — `/en`, `/ru`, `/hy` — each with hreflang and
-   `x-default`), `https://crossword.eapps.site/sitemap.xml`, and so on for every
+   `x-default`), `https://crossword.eapps.site/sitemap.xml`,
+   `https://who-wants-to-be-a-millionaire.eapps.site/sitemap.xml`, and so on for every
    `*.eapps.site` app.
-4. For per-app reports, add a **URL prefix** property per app (`https://crossword.eapps.site/`).
-   Under a verified Domain property they need no verification of their own.
+4. For per-app reports, add a **URL prefix** property per app (`https://crossword.eapps.site/`,
+   `https://who-wants-to-be-a-millionaire.eapps.site/`). Under a verified Domain property they
+   need no verification of their own.
 5. Check the structured data with Google's Rich Results Test and validator.schema.org on
    `https://eapps.site/en`, and the link preview on opengraph.xyz.
 
-Apps on other domains (`*.mnavasardian.com`, `regionify.pro`) are not covered by this property;
-each domain needs its own.
+Apps on other domains (Hangman, on `hangman.mnavasardian.com`) are not covered by this
+property; each domain needs its own.

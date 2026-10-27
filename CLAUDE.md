@@ -1,7 +1,7 @@
 # eapps
 
 The landing page of **eapps.site**: one page that lists free web apps and games (Crossword AI,
-Millionaire Quiz, Armenian Hangman, Regionify, Distance Measurer) in English, Russian and
+Millionaire AI, Armenian Hangman) in English, Russian and
 Armenian, built to rank in search and to be quoted by answer engines. No API, no database.
 
 **Stack:** Next.js 16 (App Router, `src/proxy.ts`, standalone) · React 19 · TypeScript 6 ·

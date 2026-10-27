@@ -61,8 +61,7 @@ export const softwareApplicationSchema = (app: LocalizedApp): SoftwareApplicatio
   operatingSystem: OPERATING_SYSTEMS[app.platform],
   inLanguage: [...app.languages],
   isAccessibleForFree: true,
-  // Regionify's paid tiers are one-time and priced per region at checkout, so only the free
-  // entry point is stated: a made-up price would be worse than none.
+  // A freemium app states only its free entry point: a made-up price would be worse than none.
   offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' },
   author,
   publisher: { '@id': ORGANIZATION_ID },

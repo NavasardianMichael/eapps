@@ -10,8 +10,6 @@ export const absoluteUrl = (path: string): string => `${getSiteUrl()}${path.star
  */
 export const appLinkUrl = (url: string, locale: string): string => {
   const target = new URL(url)
-  // The Chrome Web Store keeps its own attribution; tags there only clutter the link.
-  if (target.hostname === 'chromewebstore.google.com') return url
   target.searchParams.set('utm_source', 'eapps.site')
   target.searchParams.set('utm_medium', 'marketplace')
   target.searchParams.set('utm_content', locale)

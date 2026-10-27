@@ -15,10 +15,8 @@ export const contentType = 'image/png'
 
 const APP_NAMES: Record<(typeof CATALOG)[number]['id'], string> = {
   crossword: 'Crossword AI',
-  millionaire: 'Millionaire Quiz',
-  hangman: 'Hangman',
-  regionify: 'Regionify',
-  distanceMeasurer: 'Distance Measurer',
+  millionaire: 'Millionaire AI',
+  hangman: 'Armenian Hangman',
 }
 
 const ACCENT_FILLS = { coral: CORAL[200], violet: VIOLET[200], sun: SUN[200], teal: TEAL[200], sky: SKY[200] }

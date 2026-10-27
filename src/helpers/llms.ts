@@ -23,7 +23,6 @@ type FaqItem = { question: string; answer: string }
 const PLATFORM_FACTS: Record<CatalogApp['platform'], string> = {
   pwa: 'installable web app (PWA), works offline',
   web: 'web app',
-  chrome: 'Chrome extension',
 }
 
 const PRICING_FACTS: Record<CatalogApp['pricing'], string> = {

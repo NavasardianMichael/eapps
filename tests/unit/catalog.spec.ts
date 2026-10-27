@@ -40,9 +40,4 @@ describe('outbound app links', () => {
     expect(tagged.searchParams.get('utm_content')).toBe('hy')
     expect(CATALOG[0]?.url).toBe('https://crossword.eapps.site')
   })
-
-  it('leave Chrome Web Store links alone', () => {
-    const store = CATALOG.find(({ platform }) => platform === 'chrome')!
-    expect(appLinkUrl(store.url, 'en')).toBe(store.url)
-  })
 })
