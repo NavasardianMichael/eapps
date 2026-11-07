@@ -1,6 +1,8 @@
 /** Every internal path, locale-free. `@i18n/navigation` adds the prefix. */
 export const ROUTES = {
   home: '/',
+  /** English only: the shared policy every app on *.eapps.site links to (`next.config.ts` redirects the other locales). */
+  privacy: '/privacy',
 } as const
 
 export type RouteKey = keyof typeof ROUTES

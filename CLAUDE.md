@@ -55,6 +55,10 @@ pnpm check:messages    # ru/hy catalogues match en.json (keys, placeholders, plu
   `<details>`, so they are in the server HTML.
 - **Every user-visible string** is in `src/messages/en.json`, then written natively (not word
   for word) in `ru.json` and `hy.json`. `Common.siteName` is `eapps` in every language.
+  The one exception is `/en/privacy`: the shared privacy policy for every `*.eapps.site` app
+  (AdSense and the apps' consent screens link to it) is English only, written in its page;
+  `next.config.ts` redirects `/privacy`, `/ru/privacy` and `/hy/privacy` to it. Keep it true
+  when an app starts collecting something new, and bump `PRIVACY_UPDATED_AT`.
 - **Named exports declared inline**; default exports only where Next or next-intl require them.
 - **Light only.** No `dark:`, no dark colour-scheme query, no hex outside the token files, no
   Tailwind class built at runtime — `pnpm gates` enforces it.

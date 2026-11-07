@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
   // own runtime. `public/` and `.next/static` are copied in by the deploy (docs/DEPLOYMENT.md).
   output: 'standalone',
   poweredByHeader: false,
+  // The privacy policy is English only; these run before `src/proxy.ts`, so `/privacy` skips
+  // locale negotiation. 307s, so a translated policy can take the URLs back later.
+  async redirects() {
+    return [
+      { source: '/privacy', destination: '/en/privacy', permanent: false },
+      { source: '/:lang(ru|hy)/privacy', destination: '/en/privacy', permanent: false },
+    ]
+  },
   async headers() {
     return [
       {

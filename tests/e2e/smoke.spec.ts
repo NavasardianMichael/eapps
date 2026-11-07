@@ -57,3 +57,28 @@ test('an app opens in a new tab', async ({ page }) => {
   await expect(link).toHaveAttribute('target', '_blank')
   await expect(link).toHaveAttribute('href', /utm_source=eapps\.site/)
 })
+
+test.describe('the privacy policy', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('is served in English, canonical to itself, with no other-language alternates', async ({ page }) => {
+    await page.goto('/en/privacy')
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+    await expect(page.locator('h1')).toHaveText('Privacy policy')
+    await expect(page.getByRole('link', { name: 'Ads Settings' })).toHaveAttribute('href', /google\.com\/settings\/ads/)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/en\/privacy$/)
+    await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(2)
+  })
+
+  for (const path of ['/privacy', '/ru/privacy', '/hy/privacy']) {
+    test(`${path} goes to the English policy`, async ({ page }) => {
+      await page.goto(path)
+      await expect(page).toHaveURL(/\/en\/privacy$/)
+    })
+  }
+
+  test('is linked from the footer of every language', async ({ page }) => {
+    await page.goto('/hy')
+    await expect(page.locator('footer a[href="/en/privacy"]')).toHaveCount(1)
+  })
+})

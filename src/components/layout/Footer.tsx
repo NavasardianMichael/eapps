@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { LOCALE_LABELS, LOCALES } from '@i18n/config'
+import { DEFAULT_LOCALE, LOCALE_LABELS, LOCALES } from '@i18n/config'
 import { AUTHOR, SITE_NAME } from '@constants/app'
 import { CATALOG } from '@constants/catalog'
 import { ROUTES } from '@constants/routes'
@@ -54,7 +54,17 @@ export const Footer = () => {
         </div>
       </div>
       <div className='container-page flex flex-wrap items-center justify-between gap-2 border-t border-line-strong py-5 text-caption text-ink-500'>
-        <p>{t('Common.copyright', { year, siteName: SITE_NAME })}</p>
+        <p>
+          {t('Common.copyright', { year, siteName: SITE_NAME })} ·{' '}
+          <AppLink
+            href={ROUTES.privacy}
+            locale={DEFAULT_LOCALE}
+            hrefLang={DEFAULT_LOCALE}
+            className='underline-offset-4 hover:underline'
+          >
+            {t('Nav.privacy')}
+          </AppLink>
+        </p>
         <p>
           {t('Common.madeBy', { author: AUTHOR.name })} ·{' '}
           <a href={AUTHOR.url} target='_blank' rel='noopener author' className='underline-offset-4 hover:underline'>

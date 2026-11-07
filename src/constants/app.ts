@@ -16,6 +16,12 @@ export const AUTHOR = {
   sameAs: ['https://www.linkedin.com/in/michael-navasardyan/', 'https://github.com/NavasardianMichael'],
 } as const
 
+/** Where privacy requests go; the same address the apps' own privacy pages give. */
+export const CONTACT_EMAIL = 'contact@eapps.com'
+
+/** Shown as "Last updated" on `/en/privacy`. Change it with the policy. */
+export const PRIVACY_UPDATED_AT = new Date('2026-11-08T00:00:00Z')
+
 /**
  * When the public copy (catalogue, FAQ) last changed: the sitemap's `lastmod` and JSON-LD
  * `dateModified`. Bump it with the copy — a date that moves on every deploy teaches crawlers

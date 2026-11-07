@@ -19,9 +19,12 @@ export const currentLocale = async (): Promise<Locale> => {
  * `hreflang` is what says "same page, other language". Paths stay root-relative;
  * `metadataBase` in the root layout makes them absolute.
  */
-export const localizedAlternates = async (path: string): Promise<Metadata['alternates']> => {
+export const localizedAlternates = async (
+  path: string,
+  locales: readonly Locale[] = LOCALES
+): Promise<Metadata['alternates']> => {
   const locale = await currentLocale()
-  const languages = Object.fromEntries(LOCALES.map((each) => [each, localePath(each, path)]))
+  const languages = Object.fromEntries(locales.map((each) => [each, localePath(each, path)]))
 
   return {
     canonical: localePath(locale, path),
@@ -37,6 +40,8 @@ type PageMetadataInput = {
   noIndex?: boolean
   /** The title is complete already: skip the layout's `%s | {siteName}` template (the home page). */
   absoluteTitle?: boolean
+  /** The languages the page exists in, when not all of them (the English-only privacy policy). */
+  locales?: readonly Locale[]
 }
 
 /**
@@ -50,6 +55,7 @@ export const pageMetadata = async ({
   description,
   noIndex,
   absoluteTitle,
+  locales = LOCALES,
 }: PageMetadataInput): Promise<Metadata> => {
   const locale = await currentLocale()
   const t = await getTranslations()
@@ -57,7 +63,7 @@ export const pageMetadata = async ({
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
-    alternates: await localizedAlternates(path),
+    alternates: await localizedAlternates(path, locales),
     openGraph: {
       type: 'website',
       siteName: t('Common.siteName'),
@@ -65,7 +71,7 @@ export const pageMetadata = async ({
       description,
       url: localePath(locale, path),
       locale: OG_LOCALES[locale],
-      alternateLocale: LOCALES.filter((each) => each !== locale).map((each) => OG_LOCALES[each]),
+      alternateLocale: locales.filter((each) => each !== locale).map((each) => OG_LOCALES[each]),
       images: [image],
     },
     twitter: { card: 'summary_large_image', title, description, images: [image] },
